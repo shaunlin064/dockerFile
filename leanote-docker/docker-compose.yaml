@@ -1,0 +1,53 @@
+version: '3.1'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:4
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: leanote
+    volumes:
+      - ${STORAGE_PATH}/mongodb:/data/db
+      - ${STORAGE_PATH}/mongodb_backup/leanote_install_data:/leanote_install_data
+      - ./dbinit.sh:/docker-entrypoint-initdb.d/dbinit.sh
+      - ./leanote.js:/leanote.js
+    networks:
+      - backend
+  mongoex:
+    container_name: mongoex
+    image: mongo-express:latest
+    environment:
+     - ME_CONFIG_MONGODB_SERVER=mongo
+     - ME_CONFIG_MONGODB_PORT=27017
+     - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+     - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+     - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_ROOT_USER}
+     - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD}
+    links:
+      - mongo:mongodb
+    depends_on:
+      - mongo
+    ports:
+      - 9080:8081
+    networks:
+      - backend
+  leanote:
+    container_name: leanote
+    depends_on:
+     - mongo
+    links:
+     - mongo:mongodb
+    image: zxfishhack/leanote
+    restart: always
+    volumes:
+      - ./datas/files:/leanote/src/github.com/leanote/leanote/files
+      - ./datas/upload:/leanote/src/github.com/leanote/leanote/public/upload
+      - ./app.conf:/leanote/src/github.com/leanote/leanote/conf/app.conf
+    ports:
+      - 9001:9000
+    networks:
+      - backend
+networks:
+  backend:
