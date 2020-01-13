@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM shaunlin064/php5.6_apache
 RUN docker-php-ext-install mysqli pdo pdo_mysql mysql
 RUN a2enmod rewrite
 
