@@ -88,7 +88,7 @@ services:
       - backend
   invoice:
     container_name: invoice
-    images: shaunlin064/php7.1_fpm:latest
+    image: shaunlin064/php71_fpm:latest
     restart: unless-stopped
     volumes:
       - "${STORAGE_PATH}:/var/project"
