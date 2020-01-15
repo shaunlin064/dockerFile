@@ -23,7 +23,6 @@ RUN apt-get update && apt-get install -yq libzip-dev zip git libfreetype6-dev \
     net-tools \
     iputils-ping \
     procps \
-    supervisor \
     nodejs \
     npm
 
@@ -54,5 +53,3 @@ RUN . $NVM_DIR/nvm.sh \
     && nvm alias default $NODE_VERSION \
     && nvm use default
 
-# supervisor
-RUN mkdir /var/log/supervisor && touch /var/log/supervisor/worker.log && touch /var/run/supervisor.sock && chmod 777 /var/run/supervisor.sock
