@@ -53,3 +53,6 @@ RUN . $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use default
+
+# supervisor
+RUN mkdir /var/log/supervisor && touch /var/log/supervisor/worker.log && touch /var/run/supervisor.sock && chmod 777 /var/run/supervisor.sock
