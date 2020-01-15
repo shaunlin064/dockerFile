@@ -20,6 +20,10 @@ RUN apt-get update && apt-get install -yq libzip-dev zip git libfreetype6-dev \
     vim \
     sudo \
     cron \
+    net-tools \
+    iputils-ping \
+    procps \
+    supervisor \
     nodejs \
     npm
 
