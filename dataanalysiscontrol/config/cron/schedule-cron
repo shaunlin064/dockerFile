@@ -1,1 +1,0 @@
-* * * * * /usr/local/bin/php /var/project/dataanalysiscontrol/artisan schedule:run >> /dev/null 2>&1

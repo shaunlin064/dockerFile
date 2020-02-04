@@ -44,54 +44,40 @@ services:
       - 6379:6379
     networks:
       - backend
-  jsbackend:
-    container_name: jsbackend
-    image: shaunlin064/php5.6_apache:latest
-    restart: unless-stopped
-    ports:
-      - 8081:80
-    volumes:
-      - "${STORAGE_PATH}:/var/www/html"
-      - js-logs:/var/log/apache2
-      - ../js_erp/php.ini:/usr/local/etc/php/php.ini
-      - ../js_erp/000-default.conf:/etc/apache2/sites-available/000-default.conf
-    depends_on:
-      - mysql
-      - memcached
-    networks:
-      - backend
-  dac:
-    container_name: dac
-    build: ../dataanalysiscontrol/
+  php56:
+    container_name: php56
+    image: shaunlin064/php56_fpm:latest
     restart: unless-stopped
     volumes:
       - "${STORAGE_PATH}:/var/project"
-      - dac-logs:/var/log/apache2
-    working_dir: /var/project/dataanalysiscontrol
+    working_dir: /var/project/
     depends_on:
       - mysql
       - memcached
     networks:
       - backend
-  invoice:
-    container_name: invoice
+  php73:
+    container_name: php73
+    build: ../laravel_php73_fpm/
+    restart: unless-stopped
+    volumes:
+      - "${STORAGE_PATH}:/var/project"
+    working_dir: /var/project/
+    depends_on:
+      - mysql
+      - memcached
+    networks:
+      - backend
+  php71:
+    container_name: php71
     image: shaunlin064/php71_fpm:latest
     restart: unless-stopped
     volumes:
       - "${STORAGE_PATH}:/var/project"
-    working_dir: /var/project/invoice
+    working_dir: /var/project/
     depends_on:
       - mysql
       - memcached
-    networks:
-      - backend
-  media_effect:
-    container_name: media_effect
-    build: ../media_effect/
-    volumes:
-      - "${STORAGE_PATH}:/var/project"
-      - ../media_effect/config/supervisor/:/etc/supervisor/conf.d/
-    working_dir: /var/project/media_effect
     networks:
       - backend
   nginx:
@@ -99,26 +85,25 @@ services:
     build: ../nginx/
     restart: unless-stopped
     ports:
+      - 8081:83
       - 8082:80
       - 8083:81
       - 8084:82
     links:
-      - dac:phpfpm
-      - media_effect:phpfpm
-      - invoice:phpfpm
+      - php73:phpfpm
+      - php71:phpfpm
+      - php56:phpfpm
     volumes:
       - "${STORAGE_PATH}:/var/project"
       - ../nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - dac
-      - media_effect
-      - invoice
+      - php73
+      - php71
+      - php56
     networks:
       - backend
 networks:
   backend:
 volumes:
   db-data:
-  js-logs:
-  dac-logs:
   db-redis:
