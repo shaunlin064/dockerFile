@@ -3,7 +3,7 @@ version: "3.3"
 services:
   mysql:
     container_name: mysql
-    build: ../mysql57/
+    image: shaunlin064/mysql57:latest
     restart: unless-stopped
     tty: true
     environment:
@@ -19,7 +19,7 @@ services:
       - backend
   phpmyadmin:
     container_name: phpmyadmin
-    build: ../phpmyadmin/
+    image: shaunlin064/phpmyadmin:latest
     restart: unless-stopped
     environment:
       - PMA_HOST:mysql
@@ -58,7 +58,7 @@ services:
       - backend
   php73:
     container_name: php73
-    build: ../laravel_php73_fpm/
+    image: shaunlin064/laravel_php73_fpm:latest
     restart: unless-stopped
     volumes:
       - "${STORAGE_PATH}:/var/project"

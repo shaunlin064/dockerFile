@@ -1,5 +1,7 @@
-FROM shaunlin064/php7.3_fpm
+FROM shaunlin064/php73_fpm
 
+#supervisor
+ADD ./config/supervisor/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
 #crontab
 #ADD cron line
 ADD ./config/cron/schedule-cron /etc/cron.d/schedule-cron
