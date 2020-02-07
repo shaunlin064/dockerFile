@@ -38,6 +38,7 @@ services:
   redis:
     container_name: redis
     image: redis:latest
+    restart: unless-stopped
     volumes:
       - db-redis:/data
     ports:
@@ -82,7 +83,7 @@ services:
       - backend
   nginx:
     container_name: nginx
-    build: ../nginx/
+    image: shaunlin064/nginx:latest
     restart: unless-stopped
     ports:
       - 8081:83
