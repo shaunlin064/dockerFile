@@ -1,5 +1,9 @@
 FROM shaunlin064/php73_fpm
 
+#python
+RUN apt-get update && apt-get install -yq python \
+    python-pip
+RUN pip install twder
 #supervisor
 ADD ./config/supervisor/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
 #crontab
