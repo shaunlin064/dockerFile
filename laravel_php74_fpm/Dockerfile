@@ -1,4 +1,4 @@
-FROM shaunlin064/php73_fpm
+FROM shaunlin064/php74_fpm
 
 #python
 RUN apt-get update && apt-get install -yq python \
