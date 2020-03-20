@@ -57,6 +57,18 @@ services:
       - memcached
     networks:
       - backend
+  php71:
+    container_name: php71
+    image: shaunlin064/php71_fpm:latest
+    restart: unless-stopped
+    volumes:
+      - "${STORAGE_PATH}:/var/project"
+    working_dir: /var/project/
+    depends_on:
+      - mysql
+      - memcached
+    networks:
+      - backend
   php73:
     container_name: php73
     image: shaunlin064/laravel_php73_fpm:latest
@@ -69,9 +81,9 @@ services:
       - memcached
     networks:
       - backend
-  php71:
-    container_name: php71
-    image: shaunlin064/php71_fpm:latest
+  php74:
+    container_name: php74
+    image: shaunlin064/php74_fpm:latest
     restart: unless-stopped
     volumes:
       - "${STORAGE_PATH}:/var/project"
@@ -86,21 +98,24 @@ services:
     image: shaunlin064/nginx:latest
     restart: unless-stopped
     ports:
-      - 8081:83
-      - 8082:80
-      - 8083:81
-      - 8084:82
+      - 127.0.0.2:80:80 #jserp
+      - 127.0.0.3:80:81 #dac
+      - 127.0.0.4:80:82 #media
+      - 127.0.0.4:80:83 #invoice
+      - 127.0.0.5:80:84 #signing
     links:
-      - php73:phpfpm
-      - php71:phpfpm
       - php56:phpfpm
+      - php71:phpfpm
+      - php73:phpfpm
+      - php74:phpfpm
     volumes:
       - "${STORAGE_PATH}:/var/project"
       - ../nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - php73
-      - php71
       - php56
+      - php71
+      - php73
+      - php74
     networks:
       - backend
 networks:
