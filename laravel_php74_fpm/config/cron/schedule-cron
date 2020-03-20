@@ -1,0 +1,4 @@
+* * * * * /usr/local/bin/php /var/project/dataanalysiscontrol/artisan schedule:run >> /dev/null 2>&1
+* * * * * /usr/local/bin/php /var/project/media_effect/artisan schedule:run >> /dev/null 2>&1
+* * * * * /usr/local/bin/php /var/project/signing/artisan schedule:run >> /dev/null 2>&1
+@reboot /etc/init.d/supervisor start > /dev/null
