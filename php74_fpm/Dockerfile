@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -yq libzip-dev zip git libfreetype6-dev \
     libmcrypt-dev \
     libssl-dev \
     libmemcached-dev \
+    libonig-dev \
     libz-dev \
     zlib1g-dev \
     libsqlite3-dev \
@@ -33,9 +34,9 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 
 #docker ext
-RUN docker-php-ext-configure zip --with-libzip
+RUN docker-php-ext-configure zip
 RUN docker-php-ext-install mysqli pdo pdo_mysql zip mbstring tokenizer pcntl soap
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+RUN docker-php-ext-configure gd \
     && docker-php-ext-install gd
 RUN pecl install memcached \
     && docker-php-ext-enable memcached
