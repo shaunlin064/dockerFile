@@ -87,6 +87,14 @@ services:
     restart: unless-stopped
     volumes:
       - "${STORAGE_PATH}:/var/project"
+      - ./config/cron/schedule-cron:/etc/cron.d/schedule-cron
+      - ./config/supervisor/laravel-worker.conf:/etc/supervisor/conf.d/laravel-worker.conf
+    command: >
+      bash -c "chmod 0777 /etc/cron.d/schedule-cron
+      && crontab /etc/cron.d/schedule-cron
+      && service cron restart
+      && php-fpm
+      && supervisord"
     working_dir: /var/project/
     depends_on:
       - mysql
@@ -116,6 +124,16 @@ services:
       - php71
       - php73
       - php74
+    networks:
+      - backend
+  pptrass:
+    container_name: pptrass
+    image: minuux/pptraas.com
+    restart: unless-stopped
+    ports:
+      - 9999:8080
+    links:
+      - nginx
     networks:
       - backend
 networks:
