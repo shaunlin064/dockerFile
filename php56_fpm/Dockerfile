@@ -26,6 +26,17 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 
+# nvm node npm
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.2/install.sh | bash
+ENV NVM_DIR /root/.nvm
+ENV NODE_VERSION v13.11.0
+RUN /bin/sh -c ". ~/.bashrc"
+RUN . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
 #copy phpini
 COPY php.ini /usr/local/etc/php/
 
