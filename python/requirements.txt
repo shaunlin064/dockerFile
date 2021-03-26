@@ -44,7 +44,7 @@ pylink-square==0.6.1
 pyocd==0.26.1
 pyOpenSSL==19.1.0
 pyusb==1.0.2
-PyYAML==5.3.1
+PyYAML==5.4
 queuelib==1.5.0
 requests==2.24.0
 Scrapy==2.1.0
