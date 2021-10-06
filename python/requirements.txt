@@ -47,7 +47,7 @@ pyusb==1.0.2
 PyYAML==5.3.1
 queuelib==1.5.0
 requests==2.24.0
-Scrapy==2.1.0
+Scrapy==2.5.1
 semantic-version==2.8.5
 service-identity==18.1.0
 six==1.15.0
