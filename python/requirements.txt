@@ -39,7 +39,7 @@ PyDispatcher==2.0.5
 pyelftools==0.23
 PyGithub==1.51
 PyHamcrest==2.0.2
-PyJWT==1.7.1
+PyJWT==2.4.0
 pylink-square==0.6.1
 pyocd==0.26.1
 pyOpenSSL==19.1.0
